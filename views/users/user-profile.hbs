@@ -1,7 +1,16 @@
-<body>
 
-  <h1>Welcome to PetBook  {{foundUser.username}} </h1>
+
+
+{{#if userInSession}}
+    <h1>Welcome to PetBook  {{userInSession.username}} </h1>
 <img src="https://cdn.shopify.com/s/files/1/0306/9794/7272/products/kawaiies-plushies-plush-softtoy-is-dad-next-time-i-will-update-is-later-25cm-brown-hat-929630.jpg?v=1609343277">
 <br>
-<a href="/">logout</a>
-</body>
+
+  <form id="logout-form" action="/logout" method="POST">
+    <button>Logout</button>
+  </form>
+{{else}}
+  
+  <br><p>Please log in to show this page!</p>
+ 
+{{/if}}

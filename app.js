@@ -1,8 +1,6 @@
 // ℹ️ Gets access to environment variables/settings
 // https://www.npmjs.com/package/dotenv
-// require('dotenv/config');
-// const session = require("express-session");
-// const MongoStore = require("connect-mongo")
+require('dotenv/config');
 // ℹ️ Connects to the database
 require('./db');
 
@@ -15,7 +13,7 @@ const express = require('express');
 const hbs = require('hbs');
 
 const app = express();
-
+require('./config/session.config')(app)
 // ℹ️ This function is getting exported from the config folder. It runs most middlewares
 require('./config')(app);
 
@@ -26,33 +24,13 @@ const capitalized = string => string[0].toUpperCase() + string.slice(1).toLowerC
 app.locals.title = `${capitalized(projectName)}- Generated with Ironlauncher`;
 
 
-// app.use(
-//     session({
-//       secret: process.env.SECRET,
-//       resave: true,
-//       saveUninitialized: false,
-//       cookie: {
-//         httpOnly: true,
-//         sameSite: "lol",
-//         maxAge: 600000,
-//         // secure: true,
-//       },
-//       store: MongoStore.create({
-//         mongoUrl: "mongodb://localhost/lab-express-basic-auth",
-//         ttl: 600000,
-//       }),
-//     })
-//   );
-
-
-
-
 // 👇 Start handling routes here
 const index = require('./routes/index');
 app.use('/', index);
 
 const authRouter = require('./routes/auth.routes'); 
 app.use('/', authRouter);
+
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require('./error-handling')(app);
